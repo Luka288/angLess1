@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HighlightUrgentDirective } from './core/directives/highlight-urgent.directive';
 import { Task } from './core/interfaces/task';
-import { TaskComponent } from './task-card/task/task.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TaskComponent } from './task-card/task.component';
 
 @Component({
   selector: 'app-root',
