@@ -15,10 +15,12 @@
     <p class="card-text">
       Status : <span class="tasktitle"> {{ status }} </span>
     </p>
-    @if (status === 'pending') {
-    <button class="btn btn-primary" (click)="createCard()">
+    <button
+      *ngIf="status === 'pending'"
+      class="btn btn-primary"
+      (click)="createCard()"
+    >
       Mark as completed
     </button>
-    }
   </div>
 </div>

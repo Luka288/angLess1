@@ -22,7 +22,7 @@ export class AppComponent {
   currDate = new Date();
 
   createCard() {
-    if (this.taskTitle === '') {
+    if (!this.dateInput || this.taskTitle === '') {
       return;
     }
     const newTask: Task = {

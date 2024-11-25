@@ -43,14 +43,14 @@
 
     <div class="wrapTasks">
       <div class="cards" *ngFor="let task of tasks">
-        @if (toggleContainer === false && task.status === 'pending') {
+        @if (!toggleContainer && task.status === 'pending') {
         <app-task
           [taskName]="task.taskName"
           [dueDate]="task.dueDate"
           [status]="task.status"
           (taskEmit)="updateCard(task)"
         />
-        }@else if (toggleContainer === true && task.status === 'complated') {
+        }@else if (toggleContainer && task.status === 'complated') {
         <app-task
           [taskName]="task.taskName"
           [dueDate]="task.dueDate"
