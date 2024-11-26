@@ -34,6 +34,7 @@
           role="switch"
           [(ngModel)]="toggleContainer"
           id="flexSwitchCheckDefault"
+          (change)="filterTasks()"
         />
         <label class="form-check-label" for="flexSwitchCheckDefault"
           >Complated tasks</label
@@ -42,20 +43,16 @@
     </div>
 
     <div class="wrapTasks">
-      <div class="cards" *ngFor="let task of tasks">
-        @if (!toggleContainer && task.status === 'pending') {
+      <div class="cards">
+        @for (task of allTasks; track $index) {
         <app-task
           [taskName]="task.taskName"
           [dueDate]="task.dueDate"
           [status]="task.status"
           (taskEmit)="updateCard(task)"
         />
-        }@else if (toggleContainer && task.status === 'complated') {
-        <app-task
-          [taskName]="task.taskName"
-          [dueDate]="task.dueDate"
-          [status]="task.status"
-        />
+        }@empty {
+        <h1 class="place-holder text-danger">Can't find tasks</h1>
         }
       </div>
     </div>

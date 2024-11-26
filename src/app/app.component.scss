@@ -44,4 +44,16 @@ main {
       gap: 30px;
     }
   }
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+
+  .place-holder {
+    padding-top: 30px;
+    font-weight: 400;
+    font-size: 15px;
+  }
 }

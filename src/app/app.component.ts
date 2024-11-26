@@ -33,10 +33,22 @@ export class AppComponent {
     this.tasks.push(newTask);
     this.taskTitle = '';
     // this.dateInput = '';
+    this.filterTasks();
   }
 
   updateCard(task: Task) {
     task.status = 'complated';
     this.complatedTasks.push(task);
+    this.filterTasks();
+  }
+
+  allTasks: Task[] = [];
+
+  filterTasks() {
+    if (!this.toggleContainer) {
+      this.allTasks = this.tasks.filter((task) => task.status === 'pending');
+    } else {
+      this.allTasks = this.tasks.filter((task) => task.status === 'complated');
+    }
   }
 }
