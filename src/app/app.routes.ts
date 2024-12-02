@@ -18,4 +18,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./task-less/todo/todo.component').then((c) => c.TodoComponent),
   },
+
+  {
+    path: 'user-form',
+    loadComponent: () =>
+      import('./lesson2/lesson2.component').then((c) => c.Lesson2Component),
+  },
 ];

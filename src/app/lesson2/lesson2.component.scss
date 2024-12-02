@@ -1,0 +1,27 @@
+main {
+  width: 100%;
+  height: 100%;
+
+  .user-inputs {
+    width: 100%;
+    height: 100%;
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    form {
+      .resize {
+        width: 300px;
+
+        span {
+          width: 90px;
+        }
+      }
+
+      .checkBox {
+        height: 50px;
+      }
+    }
+  }
+}
