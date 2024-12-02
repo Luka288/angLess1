@@ -24,4 +24,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./lesson2/lesson2.component').then((c) => c.Lesson2Component),
   },
+
+  {
+    path: '**',
+    redirectTo: 'navigation',
+  },
 ];
