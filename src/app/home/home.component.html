@@ -1,3 +1,17 @@
-<button routerLink="/todo-app" class="btn btn-primary">
-  დავალება 1 (Todo app)
-</button>
+<main>
+  <section class="upperSection">
+    <h1 class="text-primary">Routing to tasks</h1>
+  </section>
+  <section class="navigation">
+    @for (item of navItems; track $index) {
+    <div class="taskRouteWrap">
+      <p>
+        {{ item.taskDescription }}
+      </p>
+      <button [routerLink]="item.path" class="btn btn-primary">
+        {{ item.text }}
+      </button>
+    </div>
+    }
+  </section>
+</main>
