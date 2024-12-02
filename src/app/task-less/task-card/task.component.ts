@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Task } from '../core/interfaces/task';
+import { Task } from '../../core/interfaces/task';
 import { CommonModule, DatePipe } from '@angular/common';
-import { HighlightUrgentDirective } from '../core/directives/highlight-urgent.directive';
+import { HighlightUrgentDirective } from '../../core/directives/highlight-urgent.directive';
 import { FormsModule } from '@angular/forms';
 
 @Component({
