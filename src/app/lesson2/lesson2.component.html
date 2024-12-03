@@ -1,6 +1,6 @@
 <main>
   <section class="user-inputs">
-    <form action="" [formGroup]="userInfo">
+    <form action="" [formGroup]="userInfo" (submit)="onSubmit()">
       <div class="input-group mb-3 resize">
         <span class="input-group-text" id="basic-addon1">Username</span>
         <input
@@ -85,6 +85,23 @@
         />
       </div>
 
+      <div class="customInputs">
+        @for (item of userInfo.controls.customInput?.controls; track $index) {
+        <div class="input-group mb-3 resize">
+          <span class="input-group-text" id="basic-addon1">
+            {{ item.value }}
+          </span>
+          <input
+            type="text"
+            class="form-control"
+            [placeholder]="item.value"
+            aria-label=""
+            aria-describedby="basic-addon1"
+          />
+        </div>
+        }
+      </div>
+
       <select
         class="form-select resize"
         aria-label="Default select example"
@@ -123,22 +140,76 @@
         </div>
       </div>
 
-      <div class="customInputs"></div>
-
-      <app-input-gen />
-
       <div class="formBtns">
-        <button type="submit" class="btn btn-primary" (click)="checkValues()">
-          Submit
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button (click)="resetForm()" class="btn btn-warning">
+          Reset form
         </button>
-        <button (click)="resetForm()" class="btn btn-warning">Rest form</button>
         <button
           type="button"
           class="btn btn-primary"
-          (click)="createCustomInput()"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
         >
           Create custom input
         </button>
+      </div>
+
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                Create custom input
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group mb-3 resize" formGroupName="secondForm">
+                <span class="input-group-text" id="basic-addon1"
+                  >Enter title</span
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="title"
+                  aria-label="title"
+                  aria-describedby="basic-addon1"
+                  formControlName="inputName"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="createInput()"
+              >
+                Add input
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </section>
