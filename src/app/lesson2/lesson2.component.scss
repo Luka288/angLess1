@@ -17,6 +17,13 @@ main {
         span {
           width: 90px;
         }
+
+        .form-control {
+          &.ng-pristine.ng-invalid.ng-touched,
+          &.ng-dirty.ng-invalid.ng-touched {
+            border-color: red;
+          }
+        }
       }
 
       .checkBox {

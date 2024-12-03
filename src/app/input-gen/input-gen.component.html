@@ -1,0 +1,10 @@
+<div class="user-generated-input" *ngIf="userInputIdea">
+  <label [for]="userInputIdea.inputName">
+    {{ userInputIdea.inputLabel }}
+  </label>
+  <input
+    [type]="userInputIdea.inputType"
+    [id]="userInputIdea.inputName"
+    [name]="userInputIdea.inputName"
+  />
+</div>

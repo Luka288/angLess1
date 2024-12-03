@@ -1,6 +1,6 @@
 <main>
   <section class="user-inputs">
-    <form action="">
+    <form action="" [formGroup]="userInfo">
       <div class="input-group mb-3 resize">
         <span class="input-group-text" id="basic-addon1">Username</span>
         <input
@@ -9,6 +9,7 @@
           placeholder="Username"
           aria-label="Username"
           aria-describedby="basic-addon1"
+          formControlName="username"
         />
       </div>
 
@@ -20,6 +21,7 @@
           placeholder="Last name"
           aria-label="Lastname"
           aria-describedby="basic-addon1"
+          formControlName="lastname"
         />
       </div>
 
@@ -31,6 +33,7 @@
           placeholder="age"
           aria-label="age"
           aria-describedby="basic-addon1"
+          formControlName="age"
         />
       </div>
 
@@ -42,6 +45,7 @@
           placeholder="email"
           aria-label="email"
           aria-describedby="basic-addon1"
+          formControlName="email"
         />
       </div>
 
@@ -53,6 +57,7 @@
           placeholder="address"
           aria-label="address"
           aria-describedby="basic-addon1"
+          formControlName="address"
         />
       </div>
 
@@ -64,6 +69,7 @@
           placeholder="phone"
           aria-label="phone"
           aria-describedby="basic-addon1"
+          formControlName="phone"
         />
       </div>
 
@@ -75,11 +81,16 @@
           placeholder="zipcode"
           aria-label="zipcode"
           aria-describedby="basic-addon1"
+          formControlName="zipcode"
         />
       </div>
 
-      <select class="form-select resize" aria-label="Default select example">
-        <option selected>Gender</option>
+      <select
+        class="form-select resize"
+        aria-label="Default select example"
+        formControlName="gender"
+      >
+        <option [value]="null" disabled selected>Gender</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
         <option value="other">Other</option>
@@ -90,9 +101,10 @@
           <input
             class="form-check-input"
             type="radio"
-            name="inlineRadioOptions"
+            name="terms"
             id="inlineRadio1"
-            value="option1"
+            [value]="true"
+            formControlName="terms"
           />
           <label class="form-check-label" for="inlineRadio1"
             >Agree on rules</label
@@ -102,17 +114,31 @@
           <input
             class="form-check-input"
             type="radio"
-            name="inlineRadioOptions"
+            name="terms"
             id="inlineRadio2"
-            value="option2"
+            [value]="false"
+            formControlName="terms"
           />
           <label class="form-check-label" for="inlineRadio2">Disagree</label>
         </div>
       </div>
 
+      <div class="customInputs"></div>
+
+      <app-input-gen />
+
       <div class="formBtns">
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="reset" class="btn btn-warning">Rest form</button>
+        <button type="submit" class="btn btn-primary" (click)="checkValues()">
+          Submit
+        </button>
+        <button (click)="resetForm()" class="btn btn-warning">Rest form</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="createCustomInput()"
+        >
+          Create custom input
+        </button>
       </div>
     </form>
   </section>
