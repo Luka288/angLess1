@@ -64,6 +64,8 @@ export class Lesson2Component {
   resetForm() {
     this.userInfo.reset();
     this.userInfo.controls.customInput?.clear();
+    this.userInfo.markAsUntouched();
+    this.ifSubmited = false;
   }
 
   createCustomInput(value: string | null) {
@@ -77,6 +79,9 @@ export class Lesson2Component {
 
   createInput() {
     const value = this.userInfo.controls.secondForm.controls.inputName.value;
+    if (!value) {
+      return;
+    }
     this.createCustomInput(value);
   }
 }

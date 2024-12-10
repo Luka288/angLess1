@@ -149,7 +149,7 @@
 
       <div class="formBtns">
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button (click)="resetForm()" class="btn btn-warning">
+        <button type="button" (click)="resetForm()" class="btn btn-warning">
           Reset form
         </button>
         <button
@@ -198,6 +198,10 @@
                   formControlName="inputName"
                 />
               </div>
+              <p class="tuneText">
+                enter custom title name for example
+                <span class="text-success">"About my self"</span>
+              </p>
             </div>
             <div class="modal-footer">
               <button
