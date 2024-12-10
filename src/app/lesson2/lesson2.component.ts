@@ -38,7 +38,7 @@ export class Lesson2Component {
     address: new FormControl('', Validators.required),
     phone: new FormControl(null, Validators.required),
     zipcode: new FormControl('', Validators.required),
-    terms: new FormControl(false, Validators.requiredTrue),
+    terms: new FormControl(null, Validators.requiredTrue),
     gender: new FormControl(null, Validators.required),
     customInput: new FormArray<FormControl<string | null>>([]),
     secondForm: new FormGroup({
@@ -46,17 +46,24 @@ export class Lesson2Component {
     }),
   });
 
+  ifSubmited: boolean = false;
+
   onSubmit() {
     if (this.userInfo.valid) {
       console.log(this.userInfo.value);
       this.userInfo.reset();
+      this.userInfo.markAsUntouched();
+      const customInputArray = this.userInfo.get('customInput') as FormArray;
+      customInputArray.clear();
     } else {
-      console.log('form not valid');
+      this.userInfo.markAllAsTouched();
+      this.ifSubmited = true;
     }
   }
 
   resetForm() {
     this.userInfo.reset();
+    this.userInfo.controls.customInput?.clear();
   }
 
   createCustomInput(value: string | null) {

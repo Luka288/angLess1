@@ -85,19 +85,20 @@
         />
       </div>
 
-      <div class="customInputs">
+      <div class="customInputs" formArrayName="customInput">
         @for (item of userInfo.controls.customInput?.controls; track $index) {
         <div class="input-group mb-3 resize">
           <span class="input-group-text" id="basic-addon1">
             {{ item.value }}
           </span>
-          <input
+          <textarea
             type="text"
             class="form-control"
-            [placeholder]="item.value"
+            placeholder="Your custom input"
             aria-label=""
             aria-describedby="basic-addon1"
-          />
+            [formArrayName]="$index"
+          ></textarea>
         </div>
         }
       </div>
@@ -112,6 +113,9 @@
         <option value="female">Female</option>
         <option value="other">Other</option>
       </select>
+      @if (userInfo.controls.gender.invalid && ifSubmited ) {
+      <p class="text-danger font-size">Gender is required</p>
+      }
 
       <div class="checkBox">
         <div class="form-check form-check-inline">
@@ -138,6 +142,9 @@
           />
           <label class="form-check-label" for="inlineRadio2">Disagree</label>
         </div>
+        @if (userInfo.controls.terms.invalid && ifSubmited) {
+        <p class="text-danger font-size">You must agree to terms</p>
+        }
       </div>
 
       <div class="formBtns">
@@ -180,7 +187,7 @@
             <div class="modal-body">
               <div class="input-group mb-3 resize" formGroupName="secondForm">
                 <span class="input-group-text" id="basic-addon1"
-                  >Enter title</span
+                  >Enter input title</span
                 >
                 <input
                   type="text"
