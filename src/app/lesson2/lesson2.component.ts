@@ -9,6 +9,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { userForm } from '../core/interfaces/userForm';
 import { CommonModule } from '@angular/common';
+import { debounce, debounceTime, filter, tap } from 'rxjs';
 
 @Component({
   selector: 'app-lesson2',
@@ -34,9 +35,14 @@ export class Lesson2Component {
       Validators.min(10),
       Validators.max(100),
     ]),
+    studyPlace: new FormControl('', [Validators.required]),
+    workPlace: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     address: new FormControl('', Validators.required),
-    phone: new FormControl(null, Validators.required),
+    phone: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(4),
+    ]),
     zipcode: new FormControl('', Validators.required),
     terms: new FormControl(null, Validators.requiredTrue),
     gender: new FormControl(null, Validators.required),
@@ -47,6 +53,75 @@ export class Lesson2Component {
   });
 
   ifSubmited: boolean = false;
+
+  constructor() {
+    this.userInfo.controls.email.statusChanges
+      .pipe(debounceTime(300))
+      .subscribe((res) => {
+        if (res === 'VALID') {
+          this.userInfo.controls.phone.disable();
+          this.userInfo.controls.phone.removeValidators;
+        } else {
+          this.userInfo.controls.phone.enable();
+          this.userInfo.controls.phone.addValidators([
+            Validators.required,
+            Validators.minLength(4),
+          ]);
+        }
+      });
+
+    this.userInfo.controls.phone.statusChanges
+      .pipe(debounceTime(300))
+      .subscribe((res) => {
+        if (res === 'VALID') {
+          this.userInfo.controls.email.disable();
+          this.userInfo.controls.email.removeValidators;
+        } else {
+          this.userInfo.controls.email.enable();
+          this.userInfo.controls.email.addValidators([
+            Validators.required,
+            Validators.email,
+          ]);
+        }
+      });
+
+    this.userInfo.controls.studyPlace.valueChanges
+      .pipe(
+        tap((res) => {
+          if (res) {
+            this.userInfo.controls.studyPlace.addValidators([
+              Validators.required,
+              Validators.minLength(10),
+            ]);
+
+            this.userInfo.controls.workPlace.removeValidators([
+              Validators.required,
+            ]);
+          } else {
+            this.userInfo.controls.workPlace.addValidators([
+              Validators.required,
+              Validators.minLength(10),
+            ]);
+          }
+        })
+      )
+      .subscribe((res) => {});
+
+    this.userInfo.controls.workPlace.valueChanges.pipe(
+      tap((res) => {
+        if (res) {
+          this.userInfo.controls.studyPlace.removeValidators([
+            Validators.required,
+          ]);
+        } else {
+          this.userInfo.controls.studyPlace.addValidators([
+            Validators.required,
+            Validators.minLength(10),
+          ]);
+        }
+      })
+    );
+  }
 
   onSubmit() {
     if (this.userInfo.valid) {

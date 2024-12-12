@@ -9,6 +9,8 @@ export interface userForm {
   phone: FormControl<number | null>;
   zipcode: FormControl<string | null>;
   terms: FormControl<boolean | null>;
+  studyPlace: FormControl<string | null>;
+  workPlace: FormControl<string | null>;
   gender: FormControl<'male' | 'female' | 'other' | null>;
   customInput?: FormArray<FormControl<string | null>>;
   secondForm: FormGroup<second>;

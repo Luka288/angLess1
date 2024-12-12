@@ -47,6 +47,24 @@
           aria-describedby="basic-addon1"
           formControlName="email"
         />
+        @if (userInfo.controls.email.value) {
+        <p class="text-warning">Enter email or phone number</p>
+        }
+      </div>
+
+      <div class="input-group mb-3 resize">
+        <span class="input-group-text" id="basic-addon1">Phone</span>
+        <input
+          type="tel"
+          class="form-control"
+          placeholder="phone"
+          aria-label="phone"
+          aria-describedby="basic-addon1"
+          formControlName="phone"
+        />
+        @if (userInfo.controls.phone.value) {
+        <p class="text-warning">Enter phone or email number</p>
+        }
       </div>
 
       <div class="input-group mb-3 resize">
@@ -62,18 +80,6 @@
       </div>
 
       <div class="input-group mb-3 resize">
-        <span class="input-group-text" id="basic-addon1">Phone</span>
-        <input
-          type="tel"
-          class="form-control"
-          placeholder="phone"
-          aria-label="phone"
-          aria-describedby="basic-addon1"
-          formControlName="phone"
-        />
-      </div>
-
-      <div class="input-group mb-3 resize">
         <span class="input-group-text" id="basic-addon1">Zipcode</span>
         <input
           type="text"
@@ -84,6 +90,32 @@
           formControlName="zipcode"
         />
       </div>
+
+      @if (!userInfo.controls.workPlace.value) {
+      <div class="input-group mb-3 resize">
+        <span class="input-group-text" id="basic-addon1">University</span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Where do u study"
+          aria-label="Where do u study"
+          aria-describedby="basic-addon1"
+          formControlName="studyPlace"
+        />
+      </div>
+      } @if (!userInfo.controls.studyPlace.value) {
+      <div class="input-group mb-3 resize">
+        <span class="input-group-text" id="basic-addon1">Work</span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Where do u work"
+          aria-label="Where do u work"
+          aria-describedby="basic-addon1"
+          formControlName="workPlace"
+        />
+      </div>
+      }
 
       <div class="customInputs" formArrayName="customInput">
         @for (item of userInfo.controls.customInput?.controls; track $index) {
