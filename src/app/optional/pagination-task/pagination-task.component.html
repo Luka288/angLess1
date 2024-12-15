@@ -1,0 +1,32 @@
+<main>
+  <div class="products">
+    <div class="card" style="width: 18rem" *ngFor="let item of products">
+      <img [src]="item.thumbnail" class="card-img-top" [alt]="item.title" />
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ item.title }}
+        </h5>
+        <p class="card-text">
+          {{ item.description }}
+        </p>
+        <a href="#" class="btn btn-primary"> Purhcase </a>
+      </div>
+    </div>
+  </div>
+  <div class="btns d-flex gap-5">
+    <button
+      (click)="loadPervPage()"
+      class="btn btn-primary"
+      [disabled]="skip === 0"
+    >
+      perv page
+    </button>
+    <button
+      (click)="loadNextPage()"
+      class="btn btn-primary"
+      [disabled]="skip === total"
+    >
+      next page
+    </button>
+  </div>
+</main>

@@ -26,6 +26,14 @@ export const routes: Routes = [
   },
 
   {
+    path: 'paginator',
+    loadComponent: () =>
+      import('./optional/pagination-task/pagination-task.component').then(
+        (c) => c.PaginationTaskComponent
+      ),
+  },
+
+  {
     path: '**',
     redirectTo: 'navigation',
   },
