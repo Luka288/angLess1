@@ -10,7 +10,7 @@ import { BehaviorSubject, map, tap } from 'rxjs';
 export class ProductService {
   private http = inject(HttpClient);
 
-  // pageSubject = new BehaviorSubject<number>(0);
+  pageSubject = new BehaviorSubject<number>(1);
   totalResponse = new BehaviorSubject<number>(0);
 
   loadProducts(limit: number, skip: number) {
@@ -18,9 +18,9 @@ export class ProductService {
       .get<jsonProducts>(`${baseAPI}/products?limit=${limit}&skip=${skip}`)
       .pipe(
         tap((res) => {
-          // let pages = Math.floor(res.total / res.limit);
-          // this.pageSubject.next(pages);
-          this.totalResponse.next(res.total);
+          let pages = Math.floor(res.total / res.limit);
+          this.pageSubject.next(pages);
+          // this.totalResponse.next(res.total);
         }),
         map((res) => res.products)
       );

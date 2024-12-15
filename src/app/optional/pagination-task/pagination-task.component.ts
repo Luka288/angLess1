@@ -20,11 +20,20 @@ export class PaginationTaskComponent implements OnInit {
   skip: number = 0;
   total: number = 0;
 
+  pages: number = 1;
+
   ngOnInit(): void {
     this.loadProducts(this.skip);
 
     this.productsService.totalResponse.subscribe((res) => {
       this.total = res;
+      console.log(this.pages);
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.productsService.pageSubject.subscribe((res) => {
+      this.pages = res;
     });
   }
 
@@ -34,13 +43,18 @@ export class PaginationTaskComponent implements OnInit {
     });
   }
 
-  loadNextPage() {
-    this.skip += this.limit;
-    this.loadProducts(this.skip);
+  pageLogic(value: number) {
+    let nextPage = value * this.limit;
+    this.loadProducts(nextPage);
   }
 
-  loadPervPage() {
-    this.skip -= this.limit;
-    this.loadProducts(this.skip);
-  }
+  // loadNextPage() {
+  //   this.skip += this.limit;
+  //   this.loadProducts(this.skip);
+  // }
+
+  // loadPervPage() {
+  //   this.skip -= this.limit;
+  //   this.loadProducts(this.skip);
+  // }
 }
