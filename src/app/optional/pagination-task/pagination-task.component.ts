@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProductService } from '../../core/services/product.service';
 import { CommonModule } from '@angular/common';
 import { productInter } from '../../core/interfaces/productInter';
-import { combineLatest, tap } from 'rxjs';
 
 @Component({
   selector: 'app-pagination-task',
@@ -27,8 +26,8 @@ export class PaginationTaskComponent implements OnInit {
 
     this.productsService.totalResponse.subscribe((res) => {
       this.total = res;
-      console.log(this.pages);
     });
+
   }
 
   ngAfterViewInit(): void {

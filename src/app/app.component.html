@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<main>
+    <div class="goBack"  routerLink="/" *ngIf="isVisible">
+        <button class="btn btn-success">
+            <i class="bi bi-arrow-left"></i> Back
+        </button>
+    </div>
+    <router-outlet></router-outlet>
+</main>
