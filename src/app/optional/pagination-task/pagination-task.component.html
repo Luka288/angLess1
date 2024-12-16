@@ -23,7 +23,7 @@
             let i = index
           "
         >
-          <a class="page-link" (click)="pageLogic(i)">
+          <a class="page-link" (click)="pageLogic(i)" [class.active]="i === currPage">
             {{ i + 1 }}
           </a>
         </li>

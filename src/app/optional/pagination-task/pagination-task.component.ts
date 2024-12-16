@@ -18,8 +18,8 @@ export class PaginationTaskComponent implements OnInit {
   limit: number = 5;
   skip: number = 0;
   total: number = 0;
-
   pages: number = 1;
+  currPage: number = 0;
 
   ngOnInit(): void {
     this.loadProducts(this.skip);
@@ -43,6 +43,7 @@ export class PaginationTaskComponent implements OnInit {
   }
 
   pageLogic(value: number) {
+    this.currPage = value
     let nextPage = value * this.limit;
     this.loadProducts(nextPage);
   }
