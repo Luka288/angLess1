@@ -41,6 +41,8 @@ export class TodoComponent {
     task.status = 'complated';
     this.complatedTasks.push(task);
     this.filterTasks();
+    console.log(task);
+    console.log(this.complatedTasks);
   }
 
   allTasks: Task[] = [];
@@ -48,8 +50,10 @@ export class TodoComponent {
   filterTasks() {
     if (!this.toggleContainer) {
       this.allTasks = this.tasks.filter((task) => task.status === 'pending');
-    } else {
-      this.allTasks = this.tasks.filter((task) => task.status === 'complated');
+    } else if (this.toggleContainer) {
+      this.allTasks = this.complatedTasks.filter(
+        (task) => task.status === 'complated'
+      );
     }
   }
 }

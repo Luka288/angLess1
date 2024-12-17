@@ -18,7 +18,15 @@ export class TaskComponent {
 
   @Output() taskEmit: EventEmitter<Task> = new EventEmitter<Task>();
 
-  createCard() {
-    this.taskEmit.emit();
+  // createCard() {
+  //   this.taskEmit.emit();
+  // }
+
+  updateCard() {
+    this.taskEmit.emit({
+      taskName: this.taskName!,
+      dueDate: this.dueDate,
+      status: 'complated',
+    });
   }
 }

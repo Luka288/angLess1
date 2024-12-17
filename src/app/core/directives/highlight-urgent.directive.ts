@@ -1,4 +1,11 @@
-import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  Input,
+  Renderer2,
+  SimpleChange,
+  SimpleChanges,
+} from '@angular/core';
 
 @Directive({
   selector: '[appHighlightUrgent]',
@@ -15,17 +22,30 @@ export class HighlightUrgentDirective {
   constructor(private render: Renderer2, private element: ElementRef) {}
 
   ngOnInit(): void {
+    this.update();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['highlight'] || changes['checkIfComplated']) {
+      this.update();
+    }
+  }
+
+  update() {
     const parseDate = new Date(this.highlight);
 
     const calcDates = parseDate.getTime() - this.currDate.getTime();
 
     const calcHour = 24 * 60 * 60 * 1000;
 
-    if (calcDates > 0 && calcDates <= calcHour) {
+    if (
+      (calcDates > 0 && calcDates <= calcHour) ||
+      (this.checkIfComplated === 'complated' &&
+        calcDates > 0 &&
+        calcDates <= calcHour)
+    ) {
       this.setBorderColor();
-    }
-
-    if (this.checkIfComplated === 'complated') {
+    } else {
       this.removeBorder();
     }
   }
