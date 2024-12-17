@@ -1,138 +1,251 @@
 <main>
   <section class="user-inputs">
     <form action="" [formGroup]="userInfo" (submit)="onSubmit()">
-      <div class="input-group mb-3 resize">
-        <span class="input-group-text" id="basic-addon1">Username</span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Username"
-          aria-label="Username"
-          aria-describedby="basic-addon1"
-          formControlName="username"
-        />
-      </div>
-
-      <div class="input-group mb-3 resize">
-        <span class="input-group-text" id="basic-addon1">Last name</span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Last name"
-          aria-label="Lastname"
-          aria-describedby="basic-addon1"
-          formControlName="lastname"
-        />
-      </div>
-
-      <div class="input-group mb-3 resize">
-        <span class="input-group-text" id="basic-addon1">age</span>
-        <input
-          type="number"
-          class="form-control"
-          placeholder="age"
-          aria-label="age"
-          aria-describedby="basic-addon1"
-          formControlName="age"
-        />
-      </div>
-
-      <div class="input-group mb-3 resize">
-        <span class="input-group-text" id="basic-addon1">Email</span>
-        <input
-          type="email"
-          class="form-control"
-          placeholder="email"
-          aria-label="email"
-          aria-describedby="basic-addon1"
-          formControlName="email"
-        />
-        @if (userInfo.controls.email.value) {
-        <p class="text-warning">Enter email or phone number</p>
-        }
-      </div>
-
-      <div class="input-group mb-3 resize">
-        <span class="input-group-text" id="basic-addon1">Phone</span>
-        <input
-          type="tel"
-          class="form-control"
-          placeholder="phone"
-          aria-label="phone"
-          aria-describedby="basic-addon1"
-          formControlName="phone"
-        />
-        @if (userInfo.controls.phone.value) {
-        <p class="text-warning">Enter phone or email number</p>
-        }
-      </div>
-
-      <div class="input-group mb-3 resize">
-        <span class="input-group-text" id="basic-addon1">Address</span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="address"
-          aria-label="address"
-          aria-describedby="basic-addon1"
-          formControlName="address"
-        />
-      </div>
-
-      <div class="input-group mb-3 resize">
-        <span class="input-group-text" id="basic-addon1">Zipcode</span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="zipcode"
-          aria-label="zipcode"
-          aria-describedby="basic-addon1"
-          formControlName="zipcode"
-        />
-      </div>
-
-      @if (!userInfo.controls.workPlace.value) {
-      <div class="input-group mb-3 resize">
-        <span class="input-group-text" id="basic-addon1">University</span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Where do u study"
-          aria-label="Where do u study"
-          aria-describedby="basic-addon1"
-          formControlName="studyPlace"
-        />
-      </div>
-      } @if (!userInfo.controls.studyPlace.value) {
-      <div class="input-group mb-3 resize">
-        <span class="input-group-text" id="basic-addon1">Work</span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Where do u work"
-          aria-label="Where do u work"
-          aria-describedby="basic-addon1"
-          formControlName="workPlace"
-        />
-      </div>
-      }
-
-      <div class="customInputs" formArrayName="customInput">
-        @for (item of userInfo.controls.customInput?.controls; track $index) {
-        <div class="input-group mb-3 resize">
-          <span class="input-group-text" id="basic-addon1">
-            {{ item.value }}
-          </span>
-          <textarea
+      <div class="inputWrap">
+        <div class="input-group resize">
+          <span class="input-group-text" id="basic-addon1">Username</span>
+          <input
             type="text"
             class="form-control"
-            placeholder="Your custom input"
-            aria-label=""
+            placeholder="Username"
+            aria-label="Username"
             aria-describedby="basic-addon1"
-            [formArrayName]="$index"
-          ></textarea>
+            formControlName="username"
+          />
         </div>
+        @if (userInfo.controls.username.hasError('required') &&
+        userInfo.controls.username.touched) {
+        <p class="text-danger errFontSize">Username is required</p>
+        }@else if (userInfo.controls.username.hasError('pattern')) {
+        <p class="text-danger errFontSize">
+          Username cannot contain special characters or numbers
+        </p>
+        }@else if (userInfo.controls.username.hasError('minlength')) {
+        <p class="text-danger errFontSize">
+          Username must be more then 1 character
+        </p>
+        }@else if (userInfo.controls.username.hasError('maxlength')) {
+        <p class="text-danger errFontSize">
+          Username must be less then 15 characters
+        </p>
         }
+      </div>
+
+      <div class="inputWrap">
+        <div class="input-group resize">
+          <span class="input-group-text" id="basic-addon1">Last name</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Last name"
+            aria-label="Lastname"
+            aria-describedby="basic-addon1"
+            formControlName="lastname"
+          />
+        </div>
+        @if (userInfo.controls.lastname.hasError('required') &&
+        userInfo.controls.lastname.touched) {
+        <p class="text-danger errFontSize">Last name is required</p>
+        }@else if (userInfo.controls.lastname.hasError('pattern')) {
+        <p class="text-danger errFontSize">
+          Last name cannot contain special characters or numbers
+        </p>
+        }@else if (userInfo.controls.lastname.hasError('minlength')) {
+        <p class="text-danger errFontSize">
+          Last name must be more then 2 characters
+        </p>
+        }@else if (userInfo.controls.lastname.hasError('maxlength')) {
+        <p class="text-danger errFontSize">
+          Last name must be less then 15 characters
+        </p>
+        }
+      </div>
+
+      <div class="inputWrap">
+        <div class="input-group resize">
+          <span class="input-group-text" id="basic-addon1">age</span>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="age"
+            aria-label="age"
+            aria-describedby="basic-addon1"
+            formControlName="age"
+          />
+        </div>
+        @if (userInfo.controls.age.hasError('required') &&
+        userInfo.controls.age.touched) {
+        <p class="text-danger errFontSize">Age is required</p>
+        }@else if (userInfo.controls.age.hasError('min')) {
+        <p class="text-danger errFontSize">You must be 18 years old</p>
+        }@else if (userInfo.controls.age.hasError('max')) {
+        <p class="text-danger errFontSize">Age must be 100 years or less</p>
+        }
+      </div>
+
+      <div class="inputWrap">
+        <div class="input-group resize">
+          <span class="input-group-text" id="basic-addon1">Email</span>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="email"
+            aria-label="email"
+            aria-describedby="basic-addon1"
+            formControlName="email"
+          />
+        </div>
+        @if (userInfo.controls.email.hasError('required') &&
+        userInfo.controls.email.touched) {
+        <p class="text-danger errFontSize">Email or phone number is required</p>
+        }@else if (userInfo.controls.email.hasError('email')) {
+        <p class="text-danger errFontSize">Enter valid email address</p>
+        }
+      </div>
+
+      <div class="inputWrap">
+        <div class="input-group resize">
+          <span class="input-group-text" id="basic-addon1">Phone</span>
+          <input
+            type="tel"
+            class="form-control"
+            placeholder="phone"
+            aria-label="phone"
+            aria-describedby="basic-addon1"
+            formControlName="phone"
+          />
+        </div>
+        @if (userInfo.controls.phone.hasError('required') &&
+        userInfo.controls.phone.touched) {
+        <p class="text-danger errFontSize">
+          Phone or email address is required
+        </p>
+        }@else if (userInfo.controls.phone.hasError('minlength')) {
+        <p class="text-danger errFontSize">
+          Phone number must be more then 3 digits
+        </p>
+        }@else if (userInfo.controls.phone.hasError('maxlength')) {
+        <p class="text-danger errFontSize">
+          Phone number must be less then 15 digits
+        </p>
+        }
+      </div>
+
+      <div class="inputWrap">
+        <div class="input-group resize">
+          <span class="input-group-text" id="basic-addon1">Address</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="address"
+            aria-label="address"
+            aria-describedby="basic-addon1"
+            formControlName="address"
+          />
+        </div>
+        @if (userInfo.controls.address.hasError('required') &&
+        userInfo.controls.address.touched) {
+        <p class="text-danger errFontSize">Address is required</p>
+        }
+      </div>
+
+      <div class="inputWrap">
+        <div class="input-group resize">
+          <span class="input-group-text" id="basic-addon1">Zipcode</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="zipcode"
+            aria-label="zipcode"
+            aria-describedby="basic-addon1"
+            formControlName="zipcode"
+          />
+        </div>
+        @if (userInfo.controls.zipcode.hasError('required') &&
+        userInfo.controls.zipcode.touched) {
+        <p class="text-danger errFontSize">Zipcode is required</p>
+        }@else if (userInfo.controls.zipcode.hasError('pattern')) {
+        <p class="text-danger errFontSize">
+          Zipcode must be 4 to 10 digits long.
+        </p>
+        }
+      </div>
+
+      <div
+        class="inputWrap"
+        [class.inputWrap]="!userInfo.controls.workPlace.value"
+      >
+        @if (!userInfo.controls.workPlace.value) {
+        <div class="input-group resize">
+          <span class="input-group-text" id="basic-addon1">University</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Where do u study"
+            aria-label="Where do u study"
+            aria-describedby="basic-addon1"
+            formControlName="studyPlace"
+          />
+        </div>
+        @if (userInfo.controls.studyPlace.hasError('required') &&
+        userInfo.controls.studyPlace.touched) {
+        <p class="text-danger errFontSize">
+          university or work place is required
+        </p>
+        }@else if (userInfo.controls.studyPlace.hasError('minlength')) {
+        <p class="text-danger errFontSize">
+          university name must be minumum 4 letters
+        </p>
+        } }
+      </div>
+
+      <div
+        class="inputWrap"
+        [class.inputWrap]="!userInfo.controls.studyPlace.value"
+      >
+        @if (!userInfo.controls.studyPlace.value) {
+        <div class="input-group resize">
+          <span class="input-group-text" id="basic-addon1">Work</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Where do u work"
+            aria-label="Where do u work"
+            aria-describedby="basic-addon1"
+            formControlName="workPlace"
+          />
+        </div>
+        @if (userInfo.controls.workPlace.hasError('required') &&
+        userInfo.controls.workPlace.touched) {
+        <p class="text-danger errFontSize">
+          work place or university is required
+        </p>
+        }@else if (userInfo.controls.workPlace.hasError('minlength')) {
+        <p class="text-danger errFontSize">
+          work place name must be minumum 4 letters
+        </p>
+        } }
+      </div>
+
+      <div [class.customInputs]="userInfo.controls.customInput?.length">
+        <div class="customInputs" formArrayName="customInput">
+          @for (item of userInfo.controls.customInput?.controls; track $index) {
+          <div class="input-group resize">
+            <span class="input-group-text" id="basic-addon1">
+              {{ item.value }}
+            </span>
+            <textarea
+              type="text"
+              resize="false"
+              class="form-control"
+              placeholder="Your custom input"
+              aria-label=""
+              aria-describedby="basic-addon1"
+              [formArrayName]="$index"
+            ></textarea>
+          </div>
+          }
+        </div>
       </div>
 
       <select
@@ -145,7 +258,8 @@
         <option value="female">Female</option>
         <option value="other">Other</option>
       </select>
-      @if (userInfo.controls.gender.invalid && ifSubmited ) {
+      @if (userInfo.controls.gender.hasError('required') &&
+      userInfo.controls.gender.touched) {
       <p class="text-danger font-size">Gender is required</p>
       }
 
@@ -217,7 +331,7 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="input-group mb-3 resize" formGroupName="secondForm">
+              <div class="input-group resize" formGroupName="secondForm">
                 <span class="input-group-text" id="basic-addon1"
                   >Enter input title</span
                 >

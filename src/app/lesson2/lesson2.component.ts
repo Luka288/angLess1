@@ -9,7 +9,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { userForm } from '../core/interfaces/userForm';
 import { CommonModule } from '@angular/common';
-import { debounce, debounceTime, filter, tap } from 'rxjs';
+import { debounceTime, tap } from 'rxjs';
 
 @Component({
   selector: 'app-lesson2',
@@ -24,26 +24,41 @@ export class Lesson2Component {
       Validators.required,
       Validators.minLength(2),
       Validators.maxLength(15),
+      Validators.pattern(/^[A-Za-z]+([ '-][A-Za-z]+)*$/),
     ]),
     lastname: new FormControl('', [
       Validators.required,
       Validators.minLength(2),
       Validators.maxLength(15),
+      Validators.pattern(/^[A-Za-z]+([ '-][A-Za-z]+)*$/),
     ]),
     age: new FormControl(null, [
       Validators.required,
-      Validators.min(10),
+      Validators.min(18),
       Validators.max(100),
     ]),
-    studyPlace: new FormControl('', [Validators.required]),
-    workPlace: new FormControl('', [Validators.required]),
+    studyPlace: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+    ]),
+    workPlace: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+    ]),
     email: new FormControl('', [Validators.required, Validators.email]),
     address: new FormControl('', Validators.required),
     phone: new FormControl(null, [
       Validators.required,
       Validators.minLength(4),
+      Validators.maxLength(15),
     ]),
-    zipcode: new FormControl('', Validators.required),
+
+    zipcode: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(10),
+      Validators.pattern(/^\d{4,10}$/),
+    ]),
     terms: new FormControl(null, Validators.requiredTrue),
     gender: new FormControl(null, Validators.required),
     customInput: new FormArray<FormControl<string | null>>([]),
@@ -60,14 +75,16 @@ export class Lesson2Component {
       .subscribe((res) => {
         if (res === 'VALID') {
           this.userInfo.controls.phone.disable();
-          this.userInfo.controls.phone.removeValidators;
+          this.userInfo.controls.phone.setValidators([]);
         } else {
           this.userInfo.controls.phone.enable();
           this.userInfo.controls.phone.addValidators([
             Validators.required,
             Validators.minLength(4),
+            Validators.maxLength(15),
           ]);
         }
+        this.userInfo.controls.phone.updateValueAndValidity();
       });
 
     this.userInfo.controls.phone.statusChanges
@@ -75,7 +92,7 @@ export class Lesson2Component {
       .subscribe((res) => {
         if (res === 'VALID') {
           this.userInfo.controls.email.disable();
-          this.userInfo.controls.email.removeValidators;
+          this.userInfo.controls.email.setValidators([]);
         } else {
           this.userInfo.controls.email.enable();
           this.userInfo.controls.email.addValidators([
@@ -83,48 +100,45 @@ export class Lesson2Component {
             Validators.email,
           ]);
         }
+        this.userInfo.controls.phone.updateValueAndValidity();
       });
 
     this.userInfo.controls.studyPlace.valueChanges
-      .pipe(
-        tap((res) => {
-          if (res) {
-            this.userInfo.controls.studyPlace.addValidators([
-              Validators.required,
-              Validators.minLength(10),
-            ]);
-
-            this.userInfo.controls.workPlace.removeValidators([
-              Validators.required,
-            ]);
-          } else {
-            this.userInfo.controls.workPlace.addValidators([
-              Validators.required,
-              Validators.minLength(10),
-            ]);
-          }
-        })
-      )
-      .subscribe((res) => {});
-
-    this.userInfo.controls.workPlace.valueChanges.pipe(
-      tap((res) => {
+      .pipe(debounceTime(300))
+      .subscribe((res) => {
         if (res) {
-          this.userInfo.controls.studyPlace.removeValidators([
+          this.userInfo.controls.studyPlace.addValidators([
             Validators.required,
+            Validators.minLength(4),
           ]);
+          this.userInfo.controls.workPlace.setValidators([]);
+        } else {
+          this.userInfo.controls.workPlace.addValidators([
+            Validators.required,
+            Validators.minLength(4),
+          ]);
+        }
+        this.userInfo.controls.workPlace.updateValueAndValidity();
+      });
+
+    this.userInfo.controls.workPlace.valueChanges
+      .pipe(debounceTime(300))
+      .subscribe((res) => {
+        if (res) {
+          this.userInfo.controls.studyPlace.setValidators([]);
         } else {
           this.userInfo.controls.studyPlace.addValidators([
             Validators.required,
-            Validators.minLength(10),
+            Validators.minLength(4),
           ]);
         }
-      })
-    );
+        this.userInfo.controls.studyPlace.updateValueAndValidity();
+      });
   }
 
   onSubmit() {
     if (this.userInfo.valid) {
+      alert('form submitted');
       console.log(this.userInfo.value);
       this.userInfo.reset();
       this.userInfo.markAsUntouched();
@@ -133,6 +147,7 @@ export class Lesson2Component {
     } else {
       this.userInfo.markAllAsTouched();
       this.ifSubmited = true;
+      console.log(this.userInfo.invalid);
     }
   }
 

@@ -11,6 +11,7 @@ main {
     align-items: center;
 
     form {
+      height: auto;
       .resize {
         width: 300px;
 
@@ -37,6 +38,30 @@ main {
 
       .font-size {
         font-size: 10px;
+      }
+
+
+      .errFontSize{
+        font-size: 13px;
+      }
+
+      .inputWrap{
+        height: 70px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .customInputs{
+        gap: 20px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .twoInput{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
       }
     }
 
